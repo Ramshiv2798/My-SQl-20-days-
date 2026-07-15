@@ -1,0 +1,60 @@
+Day_02_MySQL
+=============
+
+What are the difference between File Management System(FMS) and Database Management System(DBMS)
+===================================================================================================
+   -> FMS
+   -> DBMS
+
+1. high data redundancy (duplicate data) 
+   reduce data redundancy
+
+2. difficult to maintain and update
+   easy to maintain and update
+
+3. security is limited
+   provides strong security mechanism
+
+4. data sharing is difficult
+   multiple users can access data simultaneously
+
+5. no relationship between files
+   supports relationship between tables.
+
+6. backup and recovery is difficult
+   provides backup and recovery features.
+
+7. suitable for small applications.
+   suitable for small, medium and large applications.
+
+Q: What is the difference between a File System and DBMS?(IQ)
+=================================================================
+a file system store data in separated files may leads to data redundancy ,and security issues. A 
+DBMS stores data in a structured Manner using tables, reduces redundancy , provides security, 
+supports multiple users, and ensures data consistency and integrity.
+
+Q: What is Data, Field, Record, Database?
+===========================================
+1. What is Data?
+=================
+raw facts or figures without context
+ex: 101,ekanth,600000
+
+2. What is Field?
+=================
+smallest unit of data in database(column/attribute)
+ex: emp id, emp name, emp salary
+
+3. What is record?
+===================
+collection of related fields(row/tuple)
+ex: (101, Srirama  , 60000)
+
+4. What is database?
+=======================
+organised collection of related records stored together.
+ex: in employees database contain all employee details
+
+What is a DBMS?
+===============
+a DBMS is a software used to create, store, retrieve, update and manage databases.
