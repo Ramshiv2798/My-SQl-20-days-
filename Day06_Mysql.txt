@@ -1,0 +1,311 @@
+mysql> show databses;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databses' at line 1
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| company            |
+| db4                |
+| details            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| psf4               |
+| school1            |
+| student            |
+| students           |
+| sys                |
+| walmartsales       |
+| xyz                |
++--------------------+
+14 rows in set (0.13 sec)
+
+mysql> USE DB4;
+Database changed
+mysql> CREATE TABLE EMP(
+    -> EMPID INT AUTO_INCREMENT PRIMARY KEY,
+    -> NAME VARCHAR(30),
+    -> DEPATMENT VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> DESC EMP;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| EMPID     | int         | NO   | PRI | NULL    | auto_increment |
+| NAME      | varchar(30) | YES  |     | NULL    |                |
+| DEPATMENT | varchar(30) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.04 sec)
+
+mysql> INSERT INTO EMP (NAME,DEPARTMENT) VALUES
+    -> ('DEEPIKA','IT'),
+    -> ('SUMANTH','HR'),
+    -> ('DIVYA','SALES');
+ERROR 1054 (42S22): Unknown column 'DEPARTMENT' in 'field list'
+mysql> INSERT INTO EMP (NAME,DEPARTMENT) VALUES
+    -> ('DEEPIKA','IT'),
+    -> ('SUMANTH','HR'),
+    -> ('DIVYA','SALES');
+ERROR 1054 (42S22): Unknown column 'DEPARTMENT' in 'field list'
+mysql> INSERT INTO EMP (NAME,DEPATMENT) VALUES
+    -> ('DEEPIKA','IT'),
+    -> ('SUMANTH','HR'),
+    -> ('DIVYA','SALES');
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMP;
++-------+---------+-----------+
+| EMPID | NAME    | DEPATMENT |
++-------+---------+-----------+
+|     1 | DEEPIKA | IT        |
+|     2 | SUMANTH | HR        |
+|     3 | DIVYA   | SALES     |
++-------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE BACKUPEMP AS SELECT*FROM EMP;
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLES;
++---------------+
+| Tables_in_db4 |
++---------------+
+| backupemp     |
+| company_staff |
+| emp           |
++---------------+
+3 rows in set (0.03 sec)
+
+mysql> DESC COMPANY_STAFF;
++---------------+----------------------------------------------------+------+-----+---------+-------+
+| Field         | Type                                               | Null | Key | Default | Extra |
++---------------+----------------------------------------------------+------+-----+---------+-------+
+| COMPANY_NAME  | varchar(100)                                       | YES  |     | NULL    |       |
+| EMPID         | int                                                | YES  |     | NULL    |       |
+| AGE           | tinytext                                           | YES  |     | NULL    |       |
+| EXPERIENCE    | smallint                                           | YES  |     | NULL    |       |
+| GENDER        | char(1)                                            | YES  |     | NULL    |       |
+| EMPLOYEE_NAME | varchar(50)                                        | YES  |     | NULL    |       |
+| QUALIFICATION | varchar(50)                                        | YES  |     | NULL    |       |
+| ADDRESS       | tinytext                                           | YES  |     | NULL    |       |
+| SALARY        | decimal(15,3)                                      | YES  |     | NULL    |       |
+| DEPARTMENT    | enum('HR','IT','SALES','FINANCE','SUPPORT')        | YES  |     | NULL    |       |
+| STATUS        | varchar(50)                                        | YES  |     | NULL    |       |
+| SKILLS        | set('JAVA','PYTHON','SQL','EXCEL','COMMUNICATION') | YES  |     | NULL    |       |
+| LAST_UPDATED  | varchar(50)                                        | YES  |     | NULL    |       |
+| DATEOFJOINING | date                                               | YES  |     | NULL    |       |
+| EMAIL         | tinytext                                           | YES  |     | NULL    |       |
++---------------+----------------------------------------------------+------+-----+---------+-------+
+15 rows in set (0.01 sec)
+
+mysql> DESC BACKUPEMP;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| EMPID     | int         | NO   |     | 0       |       |
+| NAME      | varchar(30) | YES  |     | NULL    |       |
+| DEPATMENT | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT*FROM BACKUPEMP;
++-------+---------+-----------+
+| EMPID | NAME    | DEPATMENT |
++-------+---------+-----------+
+|     1 | DEEPIKA | IT        |
+|     2 | SUMANTH | HR        |
+|     3 | DIVYA   | SALES     |
++-------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE PRODUCTS;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> CREATE TABLE PRODUCTS(
+    -> PRODUCTID INT AUTO_INCREMENT PRIMARY KEY,
+    -> PRODUCTNAME VARCHAR(20),
+    -> PRICE DECIMAL(10,2),
+    -> QUANTITY INT,
+    -> TOTAL AMOUNT DECIMAL(10,2) GENERATED ALWAYS AS(PRICE*QUANTITY)STORED
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AMOUNT DECIMAL(10,2) GENERATED ALWAYS AS(PRICE*QUANTITY)STORED
+)' at line 6
+mysql> CREATE TABLE PRODUCTS(
+    -> PRODUCTID INT AUTO_INCREMENT PRIMARY KEY,
+    -> PRODUCTNAME VARCHAR(20),
+    -> PRICE DECIMAL(10,2),
+    -> QUANTITY INT,
+    -> TOTALAMOUNT DECIMAL(10,2) GENERATED ALWAYS AS(PRICE*QUANTITY)STORED
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO PRODUCT(PRODUCTNAME,PRICE,QUANTITY) VALUES
+    -> ('GOBLINSTORYBOOK',1000,5),
+    -> ('PEN',50,100),
+    -> ('SMARTPHONE',20000.22,3);
+ERROR 1146 (42S02): Table 'db4.product' doesn't exist
+mysql> INSERT INTO PRODUCTS(PRODUCTNAME,PRICE,QUANTITY) VALUES
+    -> ('GOBLINSTORYBOOK',1000,5),
+    -> ('PEN',50,100),
+    -> ('SMARTPHONE',20000.22,3);
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+-----------------+----------+----------+-------------+
+| PRODUCTID | PRODUCTNAME     | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+-----------------+----------+----------+-------------+
+|         1 | GOBLINSTORYBOOK |  1000.00 |        5 |     5000.00 |
+|         2 | PEN             |    50.00 |      100 |     5000.00 |
+|         3 | SMARTPHONE      | 20000.22 |        3 |    60000.66 |
++-----------+-----------------+----------+----------+-------------+
+3 rows in set (0.01 sec)
+
+mysql> UPDATE PRODUCTS SET PRICE=100 WHERE PRODUCTID=2;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+-----------------+----------+----------+-------------+
+| PRODUCTID | PRODUCTNAME     | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+-----------------+----------+----------+-------------+
+|         1 | GOBLINSTORYBOOK |  1000.00 |        5 |     5000.00 |
+|         2 | PEN             |   100.00 |      100 |    10000.00 |
+|         3 | SMARTPHONE      | 20000.22 |        3 |    60000.66 |
++-----------+-----------------+----------+----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM PRODUCTS WHERE PRODUCTID=3; 
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+-----------------+---------+----------+-------------+
+| PRODUCTID | PRODUCTNAME     | PRICE   | QUANTITY | TOTALAMOUNT |
++-----------+-----------------+---------+----------+-------------+
+|         1 | GOBLINSTORYBOOK | 1000.00 |        5 |     5000.00 |
+|         2 | PEN             |  100.00 |      100 |    10000.00 |
++-----------+-----------------+---------+----------+-------------+
+2 rows in set (0.01 sec)
+
+mysql> INSERT INTO PRODUCTS(PRODUCTNAME,PRICE,QUANTITY) VALUES
+    -> ('SMARTPHONE',20000.22,3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+-----------------+----------+----------+-------------+
+| PRODUCTID | PRODUCTNAME     | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+-----------------+----------+----------+-------------+
+|         1 | GOBLINSTORYBOOK |  1000.00 |        5 |     5000.00 |
+|         2 | PEN             |   100.00 |      100 |    10000.00 |
+|         4 | SMARTPHONE      | 20000.22 |        3 |    60000.66 |
++-----------+-----------------+----------+----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM PRODUCTS WHERE PRODUCTID=1; 
+Query OK, 1 row affected (0.01 sec)
+
+mysql> DELETE FROM PRODUCTS WHERE PRODUCTID=2; 
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+-------------+----------+----------+-------------+
+| PRODUCTID | PRODUCTNAME | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+-------------+----------+----------+-------------+
+|         4 | SMARTPHONE  | 20000.22 |        3 |    60000.66 |
++-----------+-------------+----------+----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO PRODUCTS(PRODUCTNAME,PRICE,QUANTITY) VALUES
+    -> ('SMARTPHONE',20000.22,3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+-------------+----------+----------+-------------+
+| PRODUCTID | PRODUCTNAME | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+-------------+----------+----------+-------------+
+|         4 | SMARTPHONE  | 20000.22 |        3 |    60000.66 |
+|         5 | SMARTPHONE  | 20000.22 |        3 |    60000.66 |
++-----------+-------------+----------+----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> -- DCL COMMANDS
+mysql> -- GRANT, REVOKE
+mysql> CREATE TABLE STUDENTS(
+    -> NAME VARCHAR(50),
+    -> MARKS INT,
+    -> SID INT AUTO_INCREMENT PRIMARY KEY,
+    -> SMOB VARCHAR(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 5
+mysql> CREATE TABLE STUDENTS(
+    -> SID INT AUTO_INCREMENT PRIMARY KEY,
+    -> SNAME VARCHAR(20),
+    -> SMOBILE VARCHAR(20),
+    -> SMARKS INT(3)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.06 sec)
+
+mysql> INSERT INTO STUDENTS(SID,SNAME,SMOBILE,SMARKS) VALUES
+    -> ('E001','DIYA','9848736452',87),
+    -> ('E002','ISHA','6787654567',93),
+    -> ('E003','RISHI','8976543082',76),
+    -> ('E004','LAYA','9837402832',69);
+ERROR 1366 (HY000): Incorrect integer value: 'E001' for column 'SID' at row 1
+mysql> SELECT*FROM STUDENTS;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO STUDENTS(SNAME,SMOBILE,SMARKS) VALUES
+    -> ('DIYA','9848736452',87),
+    -> ('ISHA','6787654567',93),
+    -> ('RISHI','8976543082',76),
+    -> ('LAYA','9837402832',69);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STUDENTS;
++-----+-------+------------+--------+
+| SID | SNAME | SMOBILE    | SMARKS |
++-----+-------+------------+--------+
+|   1 | DIYA  | 9848736452 |     87 |
+|   2 | ISHA  | 6787654567 |     93 |
+|   3 | RISHI | 8976543082 |     76 |
+|   4 | LAYA  | 9837402832 |     69 |
++-----+-------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE USER DEEPU IDENTIFIED BY 'DEEPU2004';
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> CREATE USER ZORO IDENTIFIED BY 'PANDU2000';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SHOW TABLES;
++---------------+
+| Tables_in_db4 |
++---------------+
+| backupemp     |
+| company_staff |
+| emp           |
+| products      |
+| students      |
++---------------+
+5 rows in set (0.01 sec)
+
+mysql> GRANT SELECT,INSERT,UPDATE ON STUDENTS TO DEEPU;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> GRANT SELECT,DELETE ON STUDENTS TO ZORO;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> GRANT ALL PRIVILEGES ON STUDENTS TO DEEPU;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> REVOKE INSERT,UPDATE ON STUDENTS FROM DEEPU;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> REVOKE DELETE ON STUDENTS FROM ZORO;
+Query OK, 0 rows affected (0.01 sec)
+

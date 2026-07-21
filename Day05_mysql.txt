@@ -1,0 +1,489 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| company            |
+| db4                |
+| details            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| psf4               |
+| school1            |
+| student            |
+| students           |
+| sys                |
+| walmartsales       |
+| xyz                |
++--------------------+
+14 rows in set (0.17 sec)
+
+mysql> 
+mysql> use db4;
+Database changed
+mysql> show tables;
++---------------+
+| Tables_in_db4 |
++---------------+
+| company_staff |
+| emp           |
++---------------+
+2 rows in set (0.05 sec)
+
+mysql> ALTER TABLE COMPANY_STAFF RENAME TO EMP;
+ERROR 1050 (42S01): Table 'emp' already exists
+mysql> DESC EMP;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| EMPID     | char(5)      | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(100) | YES  |     | NULL    |       |
+| LASTNAME  | varchar(100) | YES  |     | NULL    |       |
+| AGE       | int          | YES  |     | NULL    |       |
+| ADDRESS   | tinytext     | YES  |     | NULL    |       |
+| DEPT      | varchar(50)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> INSERT INTO EMP(EMPID,FIRSTNAME,LASTNAME,AGE,ADDRESS,DEPT) VALUES(
+    -> ('E0001','DEEPIKA','BARNIKALA',22,'VIZAG','PYTHON');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> 'E0001','DEEPIKA','BARNIKALA',22,'VIZAG','PYTHON');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''E0001','DEEPIKA','BARNIKALA',22,'VIZAG','PYTHON')' at line 1
+mysql> INSERT INTO EMP(EMPID,FIRSTNAME,LASTNAME,AGE,ADDRESS,DEPT) VALUES(
+    -> INSERT INTO EMP(EMPID,FIRSTNAME,LASTNAME,AGE,ADDRESS,DEPT) VALUES
+    -> ('E0001','DEEPIKA','BARNIKALA',22,'VIZAG','PYTHON');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INTO EMP(EMPID,FIRSTNAME,LASTNAME,AGE,ADDRESS,DEPT) VALUES
+('E0001','DEEPIKA','B' at line 2
+mysql> INSERT INTO EMP(EMPID,FIRSTNAME,LASTNAME,AGE,ADDRESS,DEPT) VALUES
+    -> ('E0001','DEEPIKA','BARNIKALA',22,'VIZAG','PYTHON');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> DESC EMP;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| EMPID     | char(5)      | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(100) | YES  |     | NULL    |       |
+| LASTNAME  | varchar(100) | YES  |     | NULL    |       |
+| AGE       | int          | YES  |     | NULL    |       |
+| ADDRESS   | tinytext     | YES  |     | NULL    |       |
+| DEPT      | varchar(50)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT*FROM EMP;
++-------+-----------+-----------+------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT   |
++-------+-----------+-----------+------+---------+--------+
+| E0001 | DEEPIKA   | BARNIKALA |   22 | VIZAG   | PYTHON |
++-------+-----------+-----------+------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO EMP(EMPID,FIRSTNAME,LASTNAME,AGE,ADDRESS,DEPT) VALUES
+    -> ('E0001','DEEPIKA','BARNIKALA',22,'VIZAG','PYTHON'),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> INSERT INTO EMP(EMPID,FIRSTNAME,LASTNAME,AGE,ADDRESS,DEPT) VALUES
+    -> ('E0002','SUMANTH','JADA',25,'BNGLR','VLSI'),
+    -> ('E003','DIVYA','SEELA',23,'HYDERABAD','SALES');
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMP;
++-------+-----------+-----------+------+-----------+--------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS   | DEPT   |
++-------+-----------+-----------+------+-----------+--------+
+| E0001 | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYTHON |
+| E0002 | SUMANTH   | JADA      |   25 | BNGLR     | VLSI   |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES  |
++-------+-----------+-----------+------+-----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMP(FIRSTNAME,LASTNAME,EMPID,DEPT,AGE,ADDRESS) VALUES
+    -> ('DEEPIKA','BARNIKALA','E001','PYTHON',22,'VIZAG'),
+    -> (),
+    -> ('DIVYA','SEELA','E003','SALES',23,'HYDERABAD');
+ERROR 1136 (21S01): Column count doesn't match value count at row 2
+mysql> INSERT INTO EMP(FIRSTNAME,LASTNAME,EMPID,DEPT,AGE,ADDRESS) VALUES
+    -> ('DEEPIKA','BARNIKALA','E001','PYHTON',22,'VIZAG'),
+    -> ('DIVYA','SEELA','E003','SALES',23,'HYDERABAD'),
+    -> ('SUMANTH','JADA','E002','VLSI',25,'BNGLR');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMP;
++-------+-----------+-----------+------+-----------+--------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS   | DEPT   |
++-------+-----------+-----------+------+-----------+--------+
+| E0001 | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYTHON |
+| E0002 | SUMANTH   | JADA      |   25 | BNGLR     | VLSI   |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES  |
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYHTON |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES  |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR     | VLSI   |
++-------+-----------+-----------+------+-----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMP
+    -> VALUES
+    -> ('E004','SRINIVA','D',28,'VIZAG','NAVY');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO EMP
+    -> VALES
+    -> ('E005','RAHUL','SHETTY',24,'PUNE','FRONTEND'),
+    -> ('E006','BHARATH','REDDY',27,'DELHI','DATASCIENCE');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALES
+('E005','RAHUL','SHETTY',24,'PUNE','FRONTEND'),
+('E006','BHARATH','REDDY',' at line 2
+mysql> INSERT INTO EMP
+    -> VALUES
+    -> ('E005','RAHUL','SHETTY',24,'PUNE','FRONTEND'),
+    -> ('E006','BHARATH','REDDY',27,'DELHI','DATASCIENCE');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMP;
++-------+-----------+-----------+------+-----------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS   | DEPT        |
++-------+-----------+-----------+------+-----------+-------------+
+| E0001 | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYTHON      |
+| E0002 | SUMANTH   | JADA      |   25 | BNGLR     | VLSI        |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES       |
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYHTON      |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES       |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR     | VLSI        |
+| E004  | SRINIVA   | D         |   28 | VIZAG     | NAVY        |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE      | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI     | DATASCIENCE |
++-------+-----------+-----------+------+-----------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMP(EMPID,FIRSTNAME,DEPT,AGE)
+    -> VALUES
+    -> ('E007','RISHI','MARKETING',22),
+    -> ('E008','AJAY','DEV',26),
+    -> ('E009','PRIYA','HR',29);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMP;
++-------+-----------+-----------+------+-----------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS   | DEPT        |
++-------+-----------+-----------+------+-----------+-------------+
+| E0001 | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYTHON      |
+| E0002 | SUMANTH   | JADA      |   25 | BNGLR     | VLSI        |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES       |
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYHTON      |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES       |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR     | VLSI        |
+| E004  | SRINIVA   | D         |   28 | VIZAG     | NAVY        |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE      | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI     | DATASCIENCE |
+| E007  | RISHI     | NULL      |   22 | NULL      | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL      | DEV         |
+| E009  | PRIYA     | NULL      |   29 | NULL      | HR          |
++-------+-----------+-----------+------+-----------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMP SET
+    -> EMPID='E010',
+    -> FIRSTNAME='MALINI',
+    -> LASTNAME='YADAV',
+    -> AGE=32,
+    -> ADDRESS='NOIDA',
+    -> DEPT='FINANCE';
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT*FROM EMP;
++-------+-----------+-----------+------+-----------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS   | DEPT        |
++-------+-----------+-----------+------+-----------+-------------+
+| E0001 | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYTHON      |
+| E0002 | SUMANTH   | JADA      |   25 | BNGLR     | VLSI        |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES       |
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG     | PYHTON      |
+| E003  | DIVYA     | SEELA     |   23 | HYDERABAD | SALES       |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR     | VLSI        |
+| E004  | SRINIVA   | D         |   28 | VIZAG     | NAVY        |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE      | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI     | DATASCIENCE |
+| E007  | RISHI     | NULL      |   22 | NULL      | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL      | DEV         |
+| E009  | PRIYA     | NULL      |   29 | NULL      | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA     | FINANCE     |
++-------+-----------+-----------+------+-----------+-------------+
+13 rows in set (0.00 sec)
+
+mysql> -- TO UPDATE A TABLE
+mysql> -- UPDATE TABLE-NAME SET COL-NAME=UPDATE-VALUE WHARE COMDITION;
+mysql> DELETE FROM EMP WHERE EMPID='E0001';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> DELETE FROM EMP WHERE EMPID='E0002';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> DELETE FROM EMP WHERE EMPID='E003';
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> SELECT*FROM EMP;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | PYHTON      |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | D         |   28 | VIZAG   | NAVY        |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | NULL      |   22 | NULL    | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL    | DEV         |
+| E009  | PRIYA     | NULL      |   29 | NULL    | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA   | FINANCE     |
++-------+-----------+-----------+------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMP SET LNAME='DHARMA' WHERE EMPID='E004';
+ERROR 1054 (42S22): Unknown column 'LNAME' in 'field list'
+mysql> UPDATE EMP SET LASTNAME='DHARMA' WHERE EMPID='E004';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT FIRSTNAME,LASTNAME FROM EMP;
++-----------+-----------+
+| FIRSTNAME | LASTNAME  |
++-----------+-----------+
+| DEEPIKA   | BARNIKALA |
+| SUMANTH   | JADA      |
+| SRINIVA   | DHARMA    |
+| RAHUL     | SHETTY    |
+| BHARATH   | REDDY     |
+| RISHI     | NULL      |
+| AJAY      | NULL      |
+| PRIYA     | NULL      |
+| MALINI    | YADAV     |
++-----------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT *FROM EMP WHERE EMPID='E004';
++-------+-----------+----------+------+---------+------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | ADDRESS | DEPT |
++-------+-----------+----------+------+---------+------+
+| E004  | SRINIVA   | DHARMA   |   28 | VIZAG   | NAVY |
++-------+-----------+----------+------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMP SET LNAME='KESH',AGE=28,ADDRESS='BNGLR' WHERE EMPID='E007';
+ERROR 1054 (42S22): Unknown column 'LNAME' in 'field list'
+mysql> UPDATE EMP SET LASTNAME='KESH',AGE=28,ADDRESS='BNGLR' WHERE EMPID='E007';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM EMP WHERE EMPID='E007';
++-------+-----------+----------+------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | ADDRESS | DEPT      |
++-------+-----------+----------+------+---------+-----------+
+| E007  | RISHI     | KESH     |   28 | BNGLR   | MARKETING |
++-------+-----------+----------+------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM EMP ;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | PYHTON      |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | DHARMA    |   28 | VIZAG   | NAVY        |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | KESH      |   28 | BNGLR   | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL    | DEV         |
+| E009  | PRIYA     | NULL      |   29 | NULL    | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA   | FINANCE     |
++-------+-----------+-----------+------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> -- CHANGING DEPARTMENT
+mysql> UPDATE EMP SET DEPT='DEVOPS' WHERE DEPT='DEV';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMP SET DEPT='ACCOUNTS' WHERE DEPT='NAVY';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMP SET DEPT='PYTHON' WHERE DEPT='JAVA';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT *FROM EMP ;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | PYHTON      |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | DHARMA    |   28 | VIZAG   | ACCOUNTS    |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | KESH      |   28 | BNGLR   | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL    | DEVOPS      |
+| E009  | PRIYA     | NULL      |   29 | NULL    | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA   | FINANCE     |
++-------+-----------+-----------+------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMP SET DEPT='JAVA' WHERE DEPT='PYTHON';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT *FROM EMP ;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | PYHTON      |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | DHARMA    |   28 | VIZAG   | ACCOUNTS    |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | KESH      |   28 | BNGLR   | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL    | DEVOPS      |
+| E009  | PRIYA     | NULL      |   29 | NULL    | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA   | FINANCE     |
++-------+-----------+-----------+------+---------+-------------+
+9 rows in set (0.01 sec)
+
+mysql> UPDATE EMP SET DEPT='JAVA' WHERE DEPT='PYTHON';
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT *FROM EMP ;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | PYHTON      |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | DHARMA    |   28 | VIZAG   | ACCOUNTS    |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | KESH      |   28 | BNGLR   | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL    | DEVOPS      |
+| E009  | PRIYA     | NULL      |   29 | NULL    | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA   | FINANCE     |
++-------+-----------+-----------+------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMP SET DEPT='JAVA' WHERE EMPID=';
+    '> UPDATE EMP SET DEPT='JAVA' WHERE EMPID='E001';
+    '> 
+    '> 
+    '> ;
+    '> 
+    '> ;
+    '> SELECT *FROM EMP ;
+    '> ,
+    '> ;
+    '> ^C
+mysql> SELECT *FROM EMP ;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | PYHTON      |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | DHARMA    |   28 | VIZAG   | ACCOUNTS    |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | KESH      |   28 | BNGLR   | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL    | DEVOPS      |
+| E009  | PRIYA     | NULL      |   29 | NULL    | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA   | FINANCE     |
++-------+-----------+-----------+------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMP SET DEPT='JAVA' WHERE EMPID='E001';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM EMP ;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | JAVA        |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | DHARMA    |   28 | VIZAG   | ACCOUNTS    |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | KESH      |   28 | BNGLR   | MARKETING   |
+| E008  | AJAY      | NULL      |   26 | NULL    | DEVOPS      |
+| E009  | PRIYA     | NULL      |   29 | NULL    | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA   | FINANCE     |
++-------+-----------+-----------+------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMP SET LASTNAME='RAJ' WHERE EMPID='E008';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMP SET LASTNAME='DHARSHINI' WHERE EMPID='E009';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM EMP ;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | JAVA        |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | DHARMA    |   28 | VIZAG   | ACCOUNTS    |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | KESH      |   28 | BNGLR   | MARKETING   |
+| E008  | AJAY      | RAJ       |   26 | NULL    | DEVOPS      |
+| E009  | PRIYA     | DHARSHINI |   29 | NULL    | HR          |
+| E010  | MALINI    | YADAV     |   32 | NOIDA   | FINANCE     |
++-------+-----------+-----------+------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> DELETE FROM EMP WHERE EMPID='E010';
+Query OK, 1 row affected (0.02 sec)
+
+mysql> DELETE FROM EMP WHERE FIRSTNAME='AJAY';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT *FROM EMP ;
++-------+-----------+-----------+------+---------+-------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | ADDRESS | DEPT        |
++-------+-----------+-----------+------+---------+-------------+
+| E001  | DEEPIKA   | BARNIKALA |   22 | VIZAG   | JAVA        |
+| E002  | SUMANTH   | JADA      |   25 | BNGLR   | VLSI        |
+| E004  | SRINIVA   | DHARMA    |   28 | VIZAG   | ACCOUNTS    |
+| E005  | RAHUL     | SHETTY    |   24 | PUNE    | FRONTEND    |
+| E006  | BHARATH   | REDDY     |   27 | DELHI   | DATASCIENCE |
+| E007  | RISHI     | KESH      |   28 | BNGLR   | MARKETING   |
+| E009  | PRIYA     | DHARSHINI |   29 | NULL    | HR          |
++-------+-----------+-----------+------+---------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> TRUNCATE TABLE EMP;
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> SELECT *FROM EMP ;
+Empty set (0.02 sec)
+
+mysql> DESC EMP;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| EMPID     | char(5)      | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(100) | YES  |     | NULL    |       |
+| LASTNAME  | varchar(100) | YES  |     | NULL    |       |
+| AGE       | int          | YES  |     | NULL    |       |
+| ADDRESS   | tinytext     | YES  |     | NULL    |       |
+| DEPT      | varchar(50)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> DROP TABLE EMP;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SELECT *FROM EMP ;
+ERROR 1146 (42S02): Table 'db4.emp' doesn't exist
