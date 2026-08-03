@@ -1,0 +1,473 @@
+Day_12_MySQL
+=============
+mysql> use pfs4;
+Database changed
+mysql> CREATE TABLE sales (
+    ->    sale_id INT PRIMARY KEY,
+    ->    product VARCHAR(50),
+    ->    category VARCHAR(50),
+    ->    units_sold INT,
+    ->    unit_price INT,
+    ->    region VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> 
+mysql> INSERT INTO sales (sale_id, product, category, units_sold, unit_price, region) VALUES
+    -> (1,  'Keyboard',    'Electronics', 10, 1200,  'North'),
+    -> (2,  'Monitor',     'Electronics', 5,  7000,  'South'),
+    -> (3,  'Chair',       'Furniture',   15, 2500,  'North'),
+    -> (4,  'Desk',        'Furniture',   7,  4500,  'West'),
+    -> (5,  'Mouse',       'Electronics', 20, 800,   'East'),
+    -> (6,  'Sofa',        'Furniture',   3,  15000, 'South'),
+    -> (7,  'Headphones',  'Electronics', 8,  1800,  'North'),
+    -> (8,  'Laptop',      'Electronics', 6,  55000, 'West'),
+    -> (9,  'Table',       'Furniture',   12, 6000,  'East'),
+    -> (10, 'Fan',         'HomeAppliance', 18, 3000, 'South'),
+    -> (11, 'AC',          'HomeAppliance', 4, 35000, 'North'),
+    -> (12, 'Cupboard',    'Furniture',   5, 12000, 'West'),
+    -> (13, 'Printer',     'Electronics', 9, 9000,  'East'),
+    -> (14, 'Bed',         'Furniture',   2, 25000, 'South'),
+    -> (15, 'Mobile',      'Electronics', 14, 20000, 'North');
+Query OK, 15 rows affected (0.01 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> SELECT SUM(UNITS_SOLD) AS TOTAL FROM SALES GROUP BY CATEGORY HAVING TOTAL>20;
++-------+
+| TOTAL |
++-------+
+|    72 |
+|    44 |
+|    22 |
++-------+
+3 rows in set (0.04 sec)
+
+mysql> SELECT CATEGORY,SUM(UNITS_SOLD) AS TOTAL FROM SALES GROUP BY CATEGORY HAVING TOTAL>20;
++---------------+-------+
+| CATEGORY      | TOTAL |
++---------------+-------+
+| Electronics   |    72 |
+| Furniture     |    44 |
+| HomeAppliance |    22 |
++---------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SALES;
++---------+------------+---------------+------------+------------+--------+
+| sale_id | product    | category      | units_sold | unit_price | region |
++---------+------------+---------------+------------+------------+--------+
+|       1 | Keyboard   | Electronics   |         10 |       1200 | North  |
+|       2 | Monitor    | Electronics   |          5 |       7000 | South  |
+|       3 | Chair      | Furniture     |         15 |       2500 | North  |
+|       4 | Desk       | Furniture     |          7 |       4500 | West   |
+|       5 | Mouse      | Electronics   |         20 |        800 | East   |
+|       6 | Sofa       | Furniture     |          3 |      15000 | South  |
+|       7 | Headphones | Electronics   |          8 |       1800 | North  |
+|       8 | Laptop     | Electronics   |          6 |      55000 | West   |
+|       9 | Table      | Furniture     |         12 |       6000 | East   |
+|      10 | Fan        | HomeAppliance |         18 |       3000 | South  |
+|      11 | AC         | HomeAppliance |          4 |      35000 | North  |
+|      12 | Cupboard   | Furniture     |          5 |      12000 | West   |
+|      13 | Printer    | Electronics   |          9 |       9000 | East   |
+|      14 | Bed        | Furniture     |          2 |      25000 | South  |
+|      15 | Mobile     | Electronics   |         14 |      20000 | North  |
++---------+------------+---------------+------------+------------+--------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT REGION,SUM(UNITS_SOLD*UNIT_PRICE) AS REVENUE FROM SALES GROUP BY REGION HAVING REVENUE>50000;
++--------+---------+
+| REGION | REVENUE |
++--------+---------+
+| North  |  483900 |
+| South  |  184000 |
+| West   |  421500 |
+| East   |  169000 |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CATEGORY,COUNT(PRODUCT) AS P_COUNT FROM SALES GROUP BY CATEGORY HAVING P_COUNT>2;
++-------------+---------+
+| CATEGORY    | P_COUNT |
++-------------+---------+
+| Electronics |       7 |
+| Furniture   |       6 |
++-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT CATEGORY,AVG(UNIT_PRICE) AS AVG_P FROM SALES GROUP BY CATEGORY HAVING AVG_P<5000;
+Empty set (0.00 sec)
+
+mysql> SELECT CATEGORY,AVG(UNIT_PRICE) AS AVG_P FROM SALES GROUP BY CATEGORY;
++---------------+------------+
+| CATEGORY      | AVG_P      |
++---------------+------------+
+| Electronics   | 13542.8571 |
+| Furniture     | 10833.3333 |
+| HomeAppliance | 19000.0000 |
++---------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT REGION,COUNT(PRODUCT) AS E_COUNT FROM SALES WHERE CATEGORY = 'ELECTRONICS' GROUP BY REGION HAVING E_COUNT>1;
++--------+---------+
+| REGION | E_COUNT |
++--------+---------+
+| North  |       3 |
+| East   |       2 |
++--------+---------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT CATEGORY,SUM(UNITS_SOLD) AS TOTAL FROM SALES GROUP BY CATEGORY ORDER BY TOTAL DESC;
++---------------+-------+
+| CATEGORY      | TOTAL |
++---------------+-------+
+| Electronics   |    72 |
+| Furniture     |    44 |
+| HomeAppliance |    22 |
++---------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT REGION,AVG(UNIT_PRICE) AS AVG_P FROM SALES GROUP BY REGION ORDER BY AVG_P ASC;
++--------+------------+
+| REGION | AVG_P      |
++--------+------------+
+| East   |  5266.6667 |
+| North  | 12100.0000 |
+| South  | 12500.0000 |
+| West   | 23833.3333 |
++--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CATEGORY,SUM(UNITS_SOLD*UNIT_PRICE) AS REVENUE FROM SALES GROUP BY CATEGORY ORDER BY REVENUE DESC LIMIT 1;
++-------------+---------+
+| CATEGORY    | REVENUE |
++-------------+---------+
+| Electronics |  768400 |
++-------------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT REGION,SUM(UNITS_SOLD) AS TOTAL FROM SALES GROUP BY REGION ORDER BY REGION;
++--------+-------+
+| REGION | TOTAL |
++--------+-------+
+| East   |    41 |
+| North  |    51 |
+| South  |    28 |
+| West   |    18 |
++--------+-------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT REGION,AVG(UNIT_PRICE) AS AVG_P FROM SALES GROUP BY REGION ORDER BY REGION ASC;
++--------+------------+
+| REGION | AVG_P      |
++--------+------------+
+| East   |  5266.6667 |
+| North  | 12100.0000 |
+| South  | 12500.0000 |
+| West   | 23833.3333 |
++--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT REGION,COUNT(PRODUCT) AS P_COUNT FROM SALES GROUP BY REGION ORDER BY P_COUNT DESC;
++--------+---------+
+| REGION | P_COUNT |
++--------+---------+
+| North  |       5 |
+| South  |       4 |
+| West   |       3 |
+| East   |       3 |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT REGION,SUM(UNITS_SOLD*UNIT_PRICE) AS REVENUE GROUP BY REGION HAVING REVENUE > 20000 ORDER BY REVENUE DESC;
+ERROR 1054 (42S22): Unknown column 'REGION' in 'field list'
+mysql> SELECT REGION,SUM(UNITS_SOLD*UNIT_PRICE) AS REVENUE FROM SALES GROUP BY REGION HAVING REVENUE > 20000 ORDER BY REVENUE DESC;
++--------+---------+
+| REGION | REVENUE |
++--------+---------+
+| North  |  483900 |
+| West   |  421500 |
+| South  |  184000 |
+| East   |  169000 |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CATEGORY,SUM(UNITS_SOLD) AS TOTAL FROM SALES GROUP BY CATEGORY HAVING TOTAL > 10 ORDER BY CATEGORY;
++---------------+-------+
+| CATEGORY      | TOTAL |
++---------------+-------+
+| Electronics   |    72 |
+| Furniture     |    44 |
+| HomeAppliance |    22 |
++---------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT REGION,COUNT(PRODUCT) AS P_COUNT FROM SALES GROUP BY REGION HAVING P_COUNT>1 ORDER BY REGION;
++--------+---------+
+| REGION | P_COUNT |
++--------+---------+
+| East   |       3 |
+| North  |       5 |
+| South  |       4 |
+| West   |       3 |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CATEGORY, AVG(UNIT_PRICE) AS P_AVG FROM SALES GROUP BY CATEGORY HAVING P_AVG<6000 ORDER BY P_AVG;
+Empty set (0.00 sec)
+
+mysql> SELECT CATEGORY,AVG(UNITS_SOLD) AS S_AVG FROM SALES GROUP BY CATEGORY HAVING S_AVG>5 ORDER BY S_AVG DESC;
++---------------+---------+
+| CATEGORY      | S_AVG   |
++---------------+---------+
+| HomeAppliance | 11.0000 |
+| Electronics   | 10.2857 |
+| Furniture     |  7.3333 |
++---------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT REGION,SUM(UNITS_SOLD) AS TOTAL FROM SALES WHERE PRODUCT = 'ELECTRONICS' GROUP BY REGION HAVING TOTAL > 15 ORDER BY TOTAL DESC;
+Empty set (0.00 sec)
+
+mysql> SELECT REGION,SUM(UNITS_SOLD) AS TOTAL FROM SALES WHERE CATEGORY = 'ELECTRONICS' GROUP BY REGION HAVING TOTAL > 15 ORDER BY TOTAL DESC;
++--------+-------+
+| REGION | TOTAL |
++--------+-------+
+| North  |    32 |
+| East   |    29 |
++--------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT CATEGORY,SUM(UNITS_SOLD*UNIT_PRICE) AS REVENUE FROM SALES WHERE UNIT_PRICE>2000 GROUP BY CATEGORY HAVING REVENUE > 100000 ORDER BY REVENUE DESC;
++---------------+---------+
+| CATEGORY      | REVENUE |
++---------------+---------+
+| Electronics   |  726000 |
+| Furniture     |  296000 |
+| HomeAppliance |  194000 |
++---------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT REGION,AVG(UNIT_PRICE) AS AVG_P FROM SALES WHERE UNITS_SOLD>=5 GROUP BY REGION HAVING AVG_P>5000 ORDER BY REGION;
++--------+------------+
+| REGION | AVG_P      |
++--------+------------+
+| East   |  5266.6667 |
+| North  |  6375.0000 |
+| West   | 23833.3333 |
++--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT CATEGORY,COUNT(PRODUCT) AS P_COUNT FROM SALES WHERE REGION='NORTH' AND REGION = 'SOUTH' GROUP BY CATEGORY HAVING P_COUNT>2 ORDER BY P_COUNT DESC;
+Empty set (0.00 sec)
+
+mysql> SELECT REGION,SUM(UNITS_SOLD*UNIT_PRICE) AS REVENUE FROM SALES WHERE UNIT_PRICE<10000 GROUP BY REGION HAVING REVENUE > 50000 ORDER BY REVENUE DESC;
++--------+---------+
+| REGION | REVENUE |
++--------+---------+
+| East   |  169000 |
+| South  |   89000 |
+| North  |   63900 |
++--------+---------+
+3 rows in set (0.00 sec)
+
+Set Operators:
+==============
+Union : combines results from two queries and remove duplicate rows. columns must have the same number and type.
+
+Union All : combines results from two queries. including duplicates. columns must have the same number and type.
+
+Intersect : returns rows that are common to both queries. column must have the same number and type.
+Note : MySQL doesn't support intersect directly
+
+Minus : returns rows from the first query that are not present in the second query colums must have the same number and type.
+Note : MySQL doesn't support Minus directly
+
+
+mysql> -- set operators
+mysql> -- union,intersect,unionall,minus
+mysql> CREATE TABLE STUDENTS(
+    -> STUDENT_ID INT PRIMARY KEY,
+    -> STUDENT_NAME VARCHAR(50),
+    -> COURSE VARCHAR(50)
+    -> );
+ERROR 1050 (42S01): Table 'students' already exists
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
+| emp            |
+| employees      |
+| orders         |
+| products       |
+| projects       |
+| sales          |
+| students       |
+| studentscores  |
++----------------+
+9 rows in set (0.05 sec)
+
+mysql> DROP TABLE STUDENTS;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
+| emp            |
+| employees      |
+| orders         |
+| products       |
+| projects       |
+| sales          |
+| studentscores  |
++----------------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(50),
+    ->     course VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> 
+mysql> INSERT INTO Students VALUES
+    -> (101,'Rahul','Java Full Stack'),
+    -> (102,'Priya','Python Full Stack'),
+    -> (103,'Kiran','Data Science'),
+    -> (104,'Sneha','Java Full Stack'),
+    -> (105,'Ajay','Testing');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE Placed_Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(50),
+    ->     company_name VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Placed_Students VALUES
+    -> (103,'Kiran','TCS'),
+    -> (104,'Sneha','Infosys'),
+    -> (105,'Ajay','Wipro'),
+    -> (106,'Pooja','Accenture'),
+    -> (107,'Ramesh','Capgemini');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENTS;
++------------+--------------+-------------------+
+| student_id | student_name | course            |
++------------+--------------+-------------------+
+|        101 | Rahul        | Java Full Stack   |
+|        102 | Priya        | Python Full Stack |
+|        103 | Kiran        | Data Science      |
+|        104 | Sneha        | Java Full Stack   |
+|        105 | Ajay         | Testing           |
++------------+--------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PLACED_STUDENTS;
++------------+--------------+--------------+
+| student_id | student_name | company_name |
++------------+--------------+--------------+
+|        103 | Kiran        | TCS          |
+|        104 | Sneha        | Infosys      |
+|        105 | Ajay         | Wipro        |
+|        106 | Pooja        | Accenture    |
+|        107 | Ramesh       | Capgemini    |
++------------+--------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT STUDENT_ID FROM STUDENTS
+    -> UNION
+    -> SELECT STUDENT_ID FROM PLACED_STUDENTS;
++------------+
+| STUDENT_ID |
++------------+
+|        101 |
+|        102 |
+|        103 |
+|        104 |
+|        105 |
+|        106 |
+|        107 |
++------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT STUDENT_ID FROM STUDENTS
+    -> UNION ALL
+    -> SELECT STUDENT_ID FROM PLACED_STUDENTS;
++------------+
+| STUDENT_ID |
++------------+
+|        101 |
+|        102 |
+|        103 |
+|        104 |
+|        105 |
+|        103 |
+|        104 |
+|        105 |
+|        106 |
+|        107 |
++------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT STUDENT_ID FROM STUDENTS
+    -> UNION
+    -> SELECT STUDENT_NAME FROM PLACED_STUDENTS;
++------------+
+| STUDENT_ID |
++------------+
+| 101        |
+| 102        |
+| 103        |
+| 104        |
+| 105        |
+| Kiran      |
+| Sneha      |
+| Ajay       |
+| Pooja      |
+| Ramesh     |
++------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT STUDENT_ID,STUDENT_NAME FROM STUDENTS
+    -> UNION
+    -> SELECT STUDENT_ID,STUDENT_NAME FROM PLACED_STUDENTS
+    -> ;
++------------+--------------+
+| STUDENT_ID | STUDENT_NAME |
++------------+--------------+
+|        101 | Rahul        |
+|        102 | Priya        |
+|        103 | Kiran        |
+|        104 | Sneha        |
+|        105 | Ajay         |
+|        106 | Pooja        |
+|        107 | Ramesh       |
++------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT STUDENT_ID,STUDENT_NAME FROM STUDENTS
+    -> UNION ALL
+    -> SELECT STUDENT_ID,STUDENT_NAME FROM PLACED_STUDENTS;
++------------+--------------+
+| STUDENT_ID | STUDENT_NAME |
++------------+--------------+
+|        101 | Rahul        |
+|        102 | Priya        |
+|        103 | Kiran        |
+|        104 | Sneha        |
+|        105 | Ajay         |
+|        103 | Kiran        |
+|        104 | Sneha        |
+|        105 | Ajay         |
+|        106 | Pooja        |
+|        107 | Ramesh       |
++------------+--------------+
+10 rows in set (0.00 sec)
