@@ -1,0 +1,914 @@
+Day_17_MySQL
+=============
+mysql> use pfs04;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_pfs04 |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
+| department      |
+| employee        |
+| project         |
++-----------------+
+6 rows in set (0.09 sec)
+
+mysql> select * from city;
++----+------------------+-------------+------------------------------+------------+
+| ID | Name             | CountryCode | District                     | Population |
++----+------------------+-------------+------------------------------+------------+
+|  1 | Berlin           | DEU         | Berlin                       |    3677000 |
+|  2 | Hamburg          | DEU         | Hamburg                      |    1900000 |
+|  3 | Munich           | DEU         | Bavaria                      |    1500000 |
+|  4 | Paris            | FRA         | Ile-de-France                |    2140000 |
+|  5 | Marseille        | FRA         | PACA                         |     870000 |
+|  6 | Lyon             | FRA         | Auvergne-Rhone-Alpes         |     520000 |
+|  7 | London           | GBR         | England                      |    8980000 |
+|  8 | Birmingham       | GBR         | England                      |    1145000 |
+|  9 | Manchester       | GBR         | England                      |     553000 |
+| 10 | Rome             | ITA         | Lazio                        |    2870000 |
+| 11 | Milan            | ITA         | Lombardy                     |    1370000 |
+| 12 | Naples           | ITA         | Campania                     |     950000 |
+| 13 | Madrid           | ESP         | Madrid                       |    3280000 |
+| 14 | Barcelona        | ESP         | Catalonia                    |    1620000 |
+| 15 | Valencia         | ESP         | Valencia                     |     800000 |
+| 16 | Warsaw           | POL         | Masovian                     |    1860000 |
+| 17 | Krakow           | POL         | Lesser Poland                |     780000 |
+| 18 | Amsterdam        | NLD         | North Holland                |     905000 |
+| 19 | Rotterdam        | NLD         | South Holland                |     656000 |
+| 20 | Brussels         | BEL         | Brussels                     |    1220000 |
+| 21 | Antwerp          | BEL         | Antwerp                      |     530000 |
+| 22 | Stockholm        | SWE         | Stockholm                    |     980000 |
+| 23 | Gothenburg       | SWE         | Vastra Gotaland              |     580000 |
+| 24 | Lisbon           | PRT         | Lisbon                       |     545000 |
+| 25 | Porto            | PRT         | Porto                        |     230000 |
+| 26 | Athens           | GRC         | Attica                       |     660000 |
+| 27 | Thessaloniki     | GRC         | Central Macedonia            |     320000 |
+| 28 | Monaco-Ville     | MCO         | Monaco                       |       1300 |
+| 29 | Abuja            | NGA         | Federal Capital Territory    |    1780000 |
+| 30 | Lagos            | NGA         | Lagos                        |   15400000 |
+| 31 | Kano             | NGA         | Kano                         |    4100000 |
+| 32 | Cairo            | EGY         | Cairo                        |   10100000 |
+| 33 | Alexandria       | EGY         | Alexandria                   |    5280000 |
+| 34 | Pretoria         | ZAF         | Gauteng                      |    2470000 |
+| 35 | Johannesburg     | ZAF         | Gauteng                      |    5780000 |
+| 36 | Cape Town        | ZAF         | Western Cape                 |    4710000 |
+| 37 | Nairobi          | KEN         | Nairobi                      |    4400000 |
+| 38 | Mombasa          | KEN         | Mombasa                      |    1300000 |
+| 39 | Addis Ababa      | ETH         | Addis Ababa                  |    5230000 |
+| 40 | Accra            | GHA         | Greater Accra                |    2560000 |
+| 41 | Kumasi           | GHA         | Ashanti                      |    3350000 |
+| 42 | Rabat            | MAR         | Rabat-Sale                   |     580000 |
+| 43 | Casablanca       | MAR         | Casablanca-Settat            |    3750000 |
+| 44 | Algiers          | DZA         | Algiers                      |    2760000 |
+| 45 | Oran             | DZA         | Oran                         |     850000 |
+| 46 | Beijing          | CHN         | Beijing                      |   21890000 |
+| 47 | Shanghai         | CHN         | Shanghai                     |   24870000 |
+| 48 | Shenzhen         | CHN         | Guangdong                    |   17560000 |
+| 49 | New Delhi        | IND         | Delhi                        |   34700000 |
+| 50 | Mumbai           | IND         | Maharashtra                  |   21300000 |
+| 51 | Bengaluru        | IND         | Karnataka                    |   13600000 |
+| 52 | Tokyo            | JPN         | Tokyo                        |   37400000 |
+| 53 | Osaka            | JPN         | Osaka                        |   19100000 |
+| 54 | Jakarta          | IDN         | Jakarta                      |   10900000 |
+| 55 | Surabaya         | IDN         | East Java                    |    2870000 |
+| 56 | Islamabad        | PAK         | Islamabad                    |    1140000 |
+| 57 | Karachi          | PAK         | Sindh                        |   16800000 |
+| 58 | Lahore           | PAK         | Punjab                       |   13000000 |
+| 59 | Dhaka            | BGD         | Dhaka                        |   22400000 |
+| 60 | Chittagong       | BGD         | Chittagong                   |    5200000 |
+| 61 | Hanoi            | VNM         | Hanoi                        |    8400000 |
+| 62 | Ho Chi Minh City | VNM         | Ho Chi Minh                  |    9300000 |
+| 63 | Bangkok          | THA         | Bangkok                      |   10700000 |
+| 64 | Chiang Mai       | THA         | Chiang Mai                   |    1200000 |
+| 65 | Seoul            | KOR         | Seoul                        |    9500000 |
+| 66 | Busan            | KOR         | Busan                        |    3400000 |
+| 67 | Riyadh           | SAU         | Riyadh                       |    7680000 |
+| 68 | Jeddah           | SAU         | Makkah                       |    4780000 |
+| 69 | Washington       | USA         | District of Columbia         |     690000 |
+| 70 | New York         | USA         | New York                     |    8800000 |
+| 71 | Los Angeles      | USA         | California                   |    3900000 |
+| 72 | Chicago          | USA         | Illinois                     |    2700000 |
+| 73 | Ottawa           | CAN         | Ontario                      |    1070000 |
+| 74 | Toronto          | CAN         | Ontario                      |    2930000 |
+| 75 | Vancouver        | CAN         | British Columbia             |     675000 |
+| 76 | Mexico City      | MEX         | Distrito Federal             |    9200000 |
+| 77 | Guadalajara      | MEX         | Jalisco                      |    1500000 |
+| 78 | Brasilia         | BRA         | Distrito Federal             |    3100000 |
+| 79 | Sao Paulo        | BRA         | Sao Paulo                    |   12300000 |
+| 80 | Rio de Janeiro   | BRA         | Rio de Janeiro               |    6750000 |
+| 81 | Buenos Aires     | ARG         | Buenos Aires                 |    3080000 |
+| 82 | Cordoba          | ARG         | Cordoba                      |    1450000 |
+| 83 | Bogota           | COL         | Bogota                       |    7970000 |
+| 84 | Medellin         | COL         | Antioquia                    |    2530000 |
+| 85 | Lima             | PER         | Lima                         |    9700000 |
+| 86 | Arequipa         | PER         | Arequipa                     |    1080000 |
+| 87 | Santiago         | CHL         | Santiago                     |    6270000 |
+| 88 | Valparaiso       | CHL         | Valparaiso                   |     300000 |
+| 89 | Caracas          | VEN         | Distrito Capital             |    2900000 |
+| 90 | Maracaibo        | VEN         | Zulia                        |    1650000 |
+| 91 | Canberra         | AUS         | Australian Capital Territory |     470000 |
+| 92 | Sydney           | AUS         | New South Wales              |    5310000 |
+| 93 | Melbourne        | AUS         | Victoria                     |    5150000 |
+| 94 | Wellington       | NZL         | Wellington                   |     215000 |
+| 95 | Auckland         | NZL         | Auckland                     |    1700000 |
++----+------------------+-------------+------------------------------+------------+
+95 rows in set (0.00 sec)
+
+mysql> select * from country;
++------+----------------+---------------+---------------------------+------------+----------------+-------------+---------+
+| Code | Name           | Continent     | Region                    | Population | LifeExpectancy | GNP         | Capital |
++------+----------------+---------------+---------------------------+------------+----------------+-------------+---------+
+| ARG  | Argentina      | South America | South America             |   45800000 |           76.7 |   630000.00 |      81 |
+| AUS  | Australia      | Oceania       | Australia and New Zealand |   26600000 |           83.3 |  1690000.00 |      91 |
+| BEL  | Belgium        | Europe        | Western Europe            |   11600000 |           82.0 |   590000.00 |      20 |
+| BGD  | Bangladesh     | Asia          | Southern and Central Asia |  172000000 |           72.0 |   460000.00 |      59 |
+| BRA  | Brazil         | South America | South America             |  216400000 |           75.9 |  1920000.00 |      78 |
+| CAN  | Canada         | North America | North America             |   38900000 |           82.4 |  2140000.00 |      73 |
+| CHL  | Chile          | South America | South America             |   19600000 |           80.2 |   317000.00 |      87 |
+| CHN  | China          | Asia          | Eastern Asia              | 1412000000 |           78.2 | 17960000.00 |      46 |
+| COL  | Colombia       | South America | South America             |   52200000 |           73.0 |   343000.00 |      83 |
+| DEU  | Germany        | Europe        | Western Europe            |   83200000 |           81.0 |  4260000.00 |       1 |
+| DZA  | Algeria        | Africa        | Northern Africa           |   45400000 |           77.1 |   195000.00 |      44 |
+| EGY  | Egypt          | Africa        | Northern Africa           |  112700000 |           71.8 |   435000.00 |      32 |
+| ESP  | Spain          | Europe        | Southern Europe           |   47400000 |           83.5 |  1430000.00 |      13 |
+| ETH  | Ethiopia       | Africa        | Eastern Africa            |  126500000 |           66.2 |   126000.00 |      39 |
+| FRA  | France         | Europe        | Western Europe            |   68000000 |           82.5 |  2780000.00 |       4 |
+| GBR  | United Kingdom | Europe        | British Isles             |   67300000 |           81.2 |  3130000.00 |       7 |
+| GHA  | Ghana          | Africa        | Western Africa            |   33500000 |           64.6 |    77000.00 |      40 |
+| GRC  | Greece         | Europe        | Southern Europe           |   10400000 |           81.9 |   210000.00 |      26 |
+| IDN  | Indonesia      | Asia          | Southeast Asia            |  277500000 |           68.0 |  1320000.00 |      54 |
+| IND  | India          | Asia          | Southern and Central Asia | 1428000000 |           70.2 |  3730000.00 |      49 |
+| ITA  | Italy          | Europe        | Southern Europe           |   59000000 |           83.2 |  2010000.00 |      10 |
+| JPN  | Japan          | Asia          | Eastern Asia              |  123300000 |           84.5 |  4230000.00 |      52 |
+| KEN  | Kenya          | Africa        | Eastern Africa            |   55100000 |           66.7 |   113000.00 |      37 |
+| KOR  | South Korea    | Asia          | Eastern Asia              |   51700000 |           83.5 |  1670000.00 |      65 |
+| MAR  | Morocco        | Africa        | Northern Africa           |   37800000 |           74.0 |   135000.00 |      42 |
+| MCO  | Monaco         | Europe        | Southern Europe           |      39000 |           85.9 |     7500.00 |      28 |
+| MEX  | Mexico         | North America | Central America           |  128900000 |           70.7 |  1420000.00 |      76 |
+| NGA  | Nigeria        | Africa        | Western Africa            |  223800000 |           55.8 |   477000.00 |      29 |
+| NLD  | Netherlands    | Europe        | Western Europe            |   17700000 |           82.3 |   990000.00 |      18 |
+| NZL  | New Zealand    | Oceania       | Australia and New Zealand |    5200000 |           82.5 |   250000.00 |      94 |
+| PAK  | Pakistan       | Asia          | Southern and Central Asia |  240500000 |           66.6 |   375000.00 |      56 |
+| PER  | Peru           | South America | South America             |   34400000 |           72.9 |   242000.00 |      85 |
+| POL  | Poland         | Europe        | Eastern Europe            |   37700000 |           78.0 |   690000.00 |      16 |
+| PRT  | Portugal       | Europe        | Southern Europe           |   10300000 |           82.1 |   250000.00 |      24 |
+| SAU  | Saudi Arabia   | Asia          | Middle East               |   36900000 |           76.9 |  1010000.00 |      67 |
+| SWE  | Sweden         | Europe        | Nordic Countries          |   10500000 |           83.0 |   590000.00 |      22 |
+| THA  | Thailand       | Asia          | Southeast Asia            |   71800000 |           79.3 |   495000.00 |      63 |
+| USA  | United States  | North America | North America             |  339900000 |           79.3 | 25460000.00 |      69 |
+| VEN  | Venezuela      | South America | South America             |   28300000 |           72.1 |    90000.00 |      89 |
+| VNM  | Vietnam        | Asia          | Southeast Asia            |   98900000 |           73.6 |   410000.00 |      61 |
+| ZAF  | South Africa   | Africa        | Southern Africa           |   60400000 |           65.3 |   405000.00 |      34 |
++------+----------------+---------------+---------------------------+------------+----------------+-------------+---------+
+41 rows in set (0.00 sec)
+
+mysql> desc countrylanguage;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| CountryCode | varchar(3)    | NO   | MUL | NULL    |       |
+| Language    | varchar(50)   | NO   |     | NULL    |       |
+| IsOfficial  | enum('T','F') | NO   |     | NULL    |       |
+| Percentage  | decimal(4,1)  | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> select c.name,c.population,co.name as countryname
+    -> from city c
+    -> join country co on 
+    -> c.countrycode = co.code
+    -> where co.continent = 'asia';
++------------------+------------+--------------+
+| name             | population | countryname  |
++------------------+------------+--------------+
+| Dhaka            |   22400000 | Bangladesh   |
+| Chittagong       |    5200000 | Bangladesh   |
+| Beijing          |   21890000 | China        |
+| Shanghai         |   24870000 | China        |
+| Shenzhen         |   17560000 | China        |
+| Jakarta          |   10900000 | Indonesia    |
+| Surabaya         |    2870000 | Indonesia    |
+| New Delhi        |   34700000 | India        |
+| Mumbai           |   21300000 | India        |
+| Bengaluru        |   13600000 | India        |
+| Tokyo            |   37400000 | Japan        |
+| Osaka            |   19100000 | Japan        |
+| Seoul            |    9500000 | South Korea  |
+| Busan            |    3400000 | South Korea  |
+| Islamabad        |    1140000 | Pakistan     |
+| Karachi          |   16800000 | Pakistan     |
+| Lahore           |   13000000 | Pakistan     |
+| Riyadh           |    7680000 | Saudi Arabia |
+| Jeddah           |    4780000 | Saudi Arabia |
+| Bangkok          |   10700000 | Thailand     |
+| Chiang Mai       |    1200000 | Thailand     |
+| Hanoi            |    8400000 | Vietnam      |
+| Ho Chi Minh City |    9300000 | Vietnam      |
++------------------+------------+--------------+
+23 rows in set (0.00 sec)
+
+mysql> -- find countries where the capital city has above average population for that country
+mysql> select co.name as countryname,cap.name as capitalname,cap.population
+    -> from country co
+    -> join city cap
+    -> on co.capital = cap.id
+    -> where cap.population > (select avg(c.population) from city c where countrycode = co.code); 
++----------------+--------------+------------+
+| countryname    | capitalname  | population |
++----------------+--------------+------------+
+| Argentina      | Buenos Aires |    3080000 |
+| Belgium        | Brussels     |    1220000 |
+| Bangladesh     | Dhaka        |   22400000 |
+| Chile          | Santiago     |    6270000 |
+| China          | Beijing      |   21890000 |
+| Colombia       | Bogota       |    7970000 |
+| Germany        | Berlin       |    3677000 |
+| Algeria        | Algiers      |    2760000 |
+| Egypt          | Cairo        |   10100000 |
+| Spain          | Madrid       |    3280000 |
+| France         | Paris        |    2140000 |
+| United Kingdom | London       |    8980000 |
+| Greece         | Athens       |     660000 |
+| Indonesia      | Jakarta      |   10900000 |
+| India          | New Delhi    |   34700000 |
+| Italy          | Rome         |    2870000 |
+| Japan          | Tokyo        |   37400000 |
+| Kenya          | Nairobi      |    4400000 |
+| South Korea    | Seoul        |    9500000 |
+| Mexico         | Mexico City  |    9200000 |
+| Netherlands    | Amsterdam    |     905000 |
+| Peru           | Lima         |    9700000 |
+| Poland         | Warsaw       |    1860000 |
+| Portugal       | Lisbon       |     545000 |
+| Saudi Arabia   | Riyadh       |    7680000 |
+| Sweden         | Stockholm    |     980000 |
+| Thailand       | Bangkok      |   10700000 |
+| Venezuela      | Caracas      |    2900000 |
++----------------+--------------+------------+
+28 rows in set (0.00 sec)
+
+mysql> -- find cities that are the largest in their country
+mysql> select  c1.name,c1.population,c1.countrycode
+    -> from city c1
+    -> where c1.population = (select max(c2.population) from city c2 where c2.countrycode = c1.countrycode);
++------------------+------------+-------------+
+| name             | population | countrycode |
++------------------+------------+-------------+
+| Berlin           |    3677000 | DEU         |
+| Paris            |    2140000 | FRA         |
+| London           |    8980000 | GBR         |
+| Rome             |    2870000 | ITA         |
+| Madrid           |    3280000 | ESP         |
+| Warsaw           |    1860000 | POL         |
+| Amsterdam        |     905000 | NLD         |
+| Brussels         |    1220000 | BEL         |
+| Stockholm        |     980000 | SWE         |
+| Lisbon           |     545000 | PRT         |
+| Athens           |     660000 | GRC         |
+| Monaco-Ville     |       1300 | MCO         |
+| Lagos            |   15400000 | NGA         |
+| Cairo            |   10100000 | EGY         |
+| Johannesburg     |    5780000 | ZAF         |
+| Nairobi          |    4400000 | KEN         |
+| Addis Ababa      |    5230000 | ETH         |
+| Kumasi           |    3350000 | GHA         |
+| Casablanca       |    3750000 | MAR         |
+| Algiers          |    2760000 | DZA         |
+| Shanghai         |   24870000 | CHN         |
+| New Delhi        |   34700000 | IND         |
+| Tokyo            |   37400000 | JPN         |
+| Jakarta          |   10900000 | IDN         |
+| Karachi          |   16800000 | PAK         |
+| Dhaka            |   22400000 | BGD         |
+| Ho Chi Minh City |    9300000 | VNM         |
+| Bangkok          |   10700000 | THA         |
+| Seoul            |    9500000 | KOR         |
+| Riyadh           |    7680000 | SAU         |
+| New York         |    8800000 | USA         |
+| Toronto          |    2930000 | CAN         |
+| Mexico City      |    9200000 | MEX         |
+| Sao Paulo        |   12300000 | BRA         |
+| Buenos Aires     |    3080000 | ARG         |
+| Bogota           |    7970000 | COL         |
+| Lima             |    9700000 | PER         |
+| Santiago         |    6270000 | CHL         |
+| Caracas          |    2900000 | VEN         |
+| Sydney           |    5310000 | AUS         |
+| Auckland         |    1700000 | NZL         |
++------------------+------------+-------------+
+41 rows in set (0.00 sec)
+
+mysql> select  c1.name,c1.population,c1.countrycode
+    -> from city c1
+    -> where c1.population = (select max(c2.population) from city c2 where c2.countrycode = c1.countrycode) order by c1.population desc;
++------------------+------------+-------------+
+| name             | population | countrycode |
++------------------+------------+-------------+
+| Tokyo            |   37400000 | JPN         |
+| New Delhi        |   34700000 | IND         |
+| Shanghai         |   24870000 | CHN         |
+| Dhaka            |   22400000 | BGD         |
+| Karachi          |   16800000 | PAK         |
+| Lagos            |   15400000 | NGA         |
+| Sao Paulo        |   12300000 | BRA         |
+| Jakarta          |   10900000 | IDN         |
+| Bangkok          |   10700000 | THA         |
+| Cairo            |   10100000 | EGY         |
+| Lima             |    9700000 | PER         |
+| Seoul            |    9500000 | KOR         |
+| Ho Chi Minh City |    9300000 | VNM         |
+| Mexico City      |    9200000 | MEX         |
+| London           |    8980000 | GBR         |
+| New York         |    8800000 | USA         |
+| Bogota           |    7970000 | COL         |
+| Riyadh           |    7680000 | SAU         |
+| Santiago         |    6270000 | CHL         |
+| Johannesburg     |    5780000 | ZAF         |
+| Sydney           |    5310000 | AUS         |
+| Addis Ababa      |    5230000 | ETH         |
+| Nairobi          |    4400000 | KEN         |
+| Casablanca       |    3750000 | MAR         |
+| Berlin           |    3677000 | DEU         |
+| Kumasi           |    3350000 | GHA         |
+| Madrid           |    3280000 | ESP         |
+| Buenos Aires     |    3080000 | ARG         |
+| Toronto          |    2930000 | CAN         |
+| Caracas          |    2900000 | VEN         |
+| Rome             |    2870000 | ITA         |
+| Algiers          |    2760000 | DZA         |
+| Paris            |    2140000 | FRA         |
+| Warsaw           |    1860000 | POL         |
+| Auckland         |    1700000 | NZL         |
+| Brussels         |    1220000 | BEL         |
+| Stockholm        |     980000 | SWE         |
+| Amsterdam        |     905000 | NLD         |
+| Athens           |     660000 | GRC         |
+| Lisbon           |     545000 | PRT         |
+| Monaco-Ville     |       1300 | MCO         |
++------------------+------------+-------------+
+41 rows in set (0.00 sec)
+
+mysql> select c.name,c.continent from country c
+    -> where exists(select 1 from city ci where ci.countrycode=c.code and  ci.population > 5000000);
++----------------+---------------+
+| name           | continent     |
++----------------+---------------+
+| Australia      | Oceania       |
+| Bangladesh     | Asia          |
+| Brazil         | South America |
+| Chile          | South America |
+| China          | Asia          |
+| Colombia       | South America |
+| Egypt          | Africa        |
+| Ethiopia       | Africa        |
+| United Kingdom | Europe        |
+| Indonesia      | Asia          |
+| India          | Asia          |
+| Japan          | Asia          |
+| South Korea    | Asia          |
+| Mexico         | North America |
+| Nigeria        | Africa        |
+| Pakistan       | Asia          |
+| Peru           | South America |
+| Saudi Arabia   | Asia          |
+| Thailand       | Asia          |
+| United States  | North America |
+| Vietnam        | Asia          |
+| South Africa   | Africa        |
++----------------+---------------+
+22 rows in set (0.00 sec)
+
+mysql> select c.name,c.continent from country c
+    -> where exists(select 1 from city ci where ci.countrycode=c.code and  ci.population > 5000000) order by c.continent;
++----------------+---------------+
+| name           | continent     |
++----------------+---------------+
+| Nigeria        | Africa        |
+| Egypt          | Africa        |
+| South Africa   | Africa        |
+| Ethiopia       | Africa        |
+| China          | Asia          |
+| India          | Asia          |
+| Japan          | Asia          |
+| Indonesia      | Asia          |
+| Pakistan       | Asia          |
+| Bangladesh     | Asia          |
+| Vietnam        | Asia          |
+| Thailand       | Asia          |
+| South Korea    | Asia          |
+| Saudi Arabia   | Asia          |
+| United Kingdom | Europe        |
+| United States  | North America |
+| Mexico         | North America |
+| Australia      | Oceania       |
+| Brazil         | South America |
+| Colombia       | South America |
+| Peru           | South America |
+| Chile          | South America |
++----------------+---------------+
+22 rows in set (0.00 sec)
+
+mysql> select c.name,c.continent,c.population from country c
+    -> where exists(Select 1 from city ci where ci.countrycode = c.code);
++----------------+---------------+------------+
+| name           | continent     | population |
++----------------+---------------+------------+
+| Argentina      | South America |   45800000 |
+| Australia      | Oceania       |   26600000 |
+| Belgium        | Europe        |   11600000 |
+| Bangladesh     | Asia          |  172000000 |
+| Brazil         | South America |  216400000 |
+| Canada         | North America |   38900000 |
+| Chile          | South America |   19600000 |
+| China          | Asia          | 1412000000 |
+| Colombia       | South America |   52200000 |
+| Germany        | Europe        |   83200000 |
+| Algeria        | Africa        |   45400000 |
+| Egypt          | Africa        |  112700000 |
+| Spain          | Europe        |   47400000 |
+| Ethiopia       | Africa        |  126500000 |
+| France         | Europe        |   68000000 |
+| United Kingdom | Europe        |   67300000 |
+| Ghana          | Africa        |   33500000 |
+| Greece         | Europe        |   10400000 |
+| Indonesia      | Asia          |  277500000 |
+| India          | Asia          | 1428000000 |
+| Italy          | Europe        |   59000000 |
+| Japan          | Asia          |  123300000 |
+| Kenya          | Africa        |   55100000 |
+| South Korea    | Asia          |   51700000 |
+| Morocco        | Africa        |   37800000 |
+| Monaco         | Europe        |      39000 |
+| Mexico         | North America |  128900000 |
+| Nigeria        | Africa        |  223800000 |
+| Netherlands    | Europe        |   17700000 |
+| New Zealand    | Oceania       |    5200000 |
+| Pakistan       | Asia          |  240500000 |
+| Peru           | South America |   34400000 |
+| Poland         | Europe        |   37700000 |
+| Portugal       | Europe        |   10300000 |
+| Saudi Arabia   | Asia          |   36900000 |
+| Sweden         | Europe        |   10500000 |
+| Thailand       | Asia          |   71800000 |
+| United States  | North America |  339900000 |
+| Venezuela      | South America |   28300000 |
+| Vietnam        | Asia          |   98900000 |
+| South Africa   | Africa        |   60400000 |
++----------------+---------------+------------+
+41 rows in set (0.00 sec)
+
+mysql> select c.name,c.continent,c.population from country c
+    -> where exists(Select 2 from city ci where ci.countrycode = c.code);
++----------------+---------------+------------+
+| name           | continent     | population |
++----------------+---------------+------------+
+| Argentina      | South America |   45800000 |
+| Australia      | Oceania       |   26600000 |
+| Belgium        | Europe        |   11600000 |
+| Bangladesh     | Asia          |  172000000 |
+| Brazil         | South America |  216400000 |
+| Canada         | North America |   38900000 |
+| Chile          | South America |   19600000 |
+| China          | Asia          | 1412000000 |
+| Colombia       | South America |   52200000 |
+| Germany        | Europe        |   83200000 |
+| Algeria        | Africa        |   45400000 |
+| Egypt          | Africa        |  112700000 |
+| Spain          | Europe        |   47400000 |
+| Ethiopia       | Africa        |  126500000 |
+| France         | Europe        |   68000000 |
+| United Kingdom | Europe        |   67300000 |
+| Ghana          | Africa        |   33500000 |
+| Greece         | Europe        |   10400000 |
+| Indonesia      | Asia          |  277500000 |
+| India          | Asia          | 1428000000 |
+| Italy          | Europe        |   59000000 |
+| Japan          | Asia          |  123300000 |
+| Kenya          | Africa        |   55100000 |
+| South Korea    | Asia          |   51700000 |
+| Morocco        | Africa        |   37800000 |
+| Monaco         | Europe        |      39000 |
+| Mexico         | North America |  128900000 |
+| Nigeria        | Africa        |  223800000 |
+| Netherlands    | Europe        |   17700000 |
+| New Zealand    | Oceania       |    5200000 |
+| Pakistan       | Asia          |  240500000 |
+| Peru           | South America |   34400000 |
+| Poland         | Europe        |   37700000 |
+| Portugal       | Europe        |   10300000 |
+| Saudi Arabia   | Asia          |   36900000 |
+| Sweden         | Europe        |   10500000 |
+| Thailand       | Asia          |   71800000 |
+| United States  | North America |  339900000 |
+| Venezuela      | South America |   28300000 |
+| Vietnam        | Asia          |   98900000 |
+| South Africa   | Africa        |   60400000 |
++----------------+---------------+------------+
+41 rows in set (0.00 sec)
+
+mysql> select * from employees;
+ERROR 1146 (42S02): Table 'pfs04.employees' doesn't exist
+mysql> show tables;
++-----------------+
+| Tables_in_pfs04 |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
+| department      |
+| employee        |
+| project         |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql> use pfs4;
+Database changed
+mysql> show tables;
++---------------------------+
+| Tables_in_pfs4            |
++---------------------------+
+| company_staff             |
+| departments               |
+| emp                       |
+| employee_attendance       |
+| employees                 |
+| orders                    |
+| placed_students           |
+| products                  |
+| projects                  |
+| sales                     |
+| students                  |
+| studentscores             |
+| vw_employee_annual_salary |
+| vw_ev                     |
+| vw_high                   |
++---------------------------+
+15 rows in set (0.00 sec)
+
+mysql> select * from employees;
++--------+----------+---------+-------------------+----------+------------+
+| emp_id | emp_name | dept_id | designation       | salary   | join_date  |
++--------+----------+---------+-------------------+----------+------------+
+|      1 | Rahul    |       1 | Software Engineer | 55000.00 | 2021-06-15 |
+|      2 | Anita    |       2 | HR Executive      | 38000.00 | 2020-03-21 |
+|      3 | Suresh   |       4 | Sales Manager     | 52000.00 | 2019-08-10 |
+|      4 | Priya    |       1 | Team Lead         | 65000.00 | 2022-01-05 |
+|      5 | Kiran    |       3 | Finance Analyst   | 48000.00 | 2018-12-11 |
+|      6 | Deepika  |       2 | HR Manager        | 60000.00 | 2019-10-19 |
++--------+----------+---------+-------------------+----------+------------+
+6 rows in set (0.02 sec)
+
+mysql> select min(salary) as min_s from employees;
++----------+
+| min_s    |
++----------+
+| 38000.00 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) as max_s from employees;
++----------+
+| max_s    |
++----------+
+| 65000.00 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary) as second_min
+    -> from employees where (select min(salary) from employees);
++------------+
+| second_min |
++------------+
+|   38000.00 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary) as second_min
+    -> from employees where salary> (select min(salary) from employees);
++------------+
+| second_min |
++------------+
+|   48000.00 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) as second_max
+    -> from employees where salary< (select max(salary) from employees);
++------------+
+| second_max |
++------------+
+|   60000.00 |
++------------+
+1 row in set (0.00 sec)
+
+smysql> select min(salary) as third_min
+    -> from employees where salary> (select min(salary) from employees where salary>(select min(salary) from employees));
++-----------+
+| third_min |
++-----------+
+|  52000.00 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) as third_max
+    -> from employees where salary< (select max(salary) from employees where salary<(select max(salary) from employees));
++-----------+
+| third_max |
++-----------+
+|  55000.00 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee;
+ERROR 1146 (42S02): Table 'pfs4.employee' doesn't exist
+mysql> use pfs04;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_pfs04 |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
+| department      |
+| employee        |
+| project         |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+----------+----------+---------+--------------+------------+
+| emp_id | emp_name | salary   | dept_id | job          | hire_date  |
++--------+----------+----------+---------+--------------+------------+
+|    101 | Amit     | 60000.00 |       2 | Developer    | 2021-06-12 |
+|    102 | Ravi     | 75000.00 |       2 | Manager      | 2020-03-15 |
+|    103 | Sneha    | 55000.00 |       1 | HR Executive | 2022-01-20 |
+|    104 | Priya    | 90000.00 |       3 | Accountant   | 2019-07-10 |
+|    105 | Vikas    | 50000.00 |       4 | Sales Exec   | 2022-05-30 |
+|    106 | Anjali   | 80000.00 |       2 | Developer    | 2021-08-25 |
+|    107 | Manoj    | 95000.00 |       3 | Manager      | 2018-11-05 |
++--------+----------+----------+---------+--------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from department;
++---------+-----------+-----------+
+| dept_id | dept_name | location  |
++---------+-----------+-----------+
+|       1 | HR        | Hyderabad |
+|       2 | IT        | Bangalore |
+|       3 | Finance   | Mumbai    |
+|       4 | Marketing | Delhi     |
++---------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select d.dept_id,d.dept_name,min(e.salary) as 2nd_min
+    -> from employee e
+    -> join department d on e.dept_id = d.deptid
+    -> where e.salary>(select min(salary) from employee e2 where e2.dept_id = e.dept_id) group by d.dept_id;
+ERROR 1054 (42S22): Unknown column 'd.deptid' in 'on clause'
+mysql> select d.dept_id,d.dept_name,min(e.salary) as 2nd_min
+    -> from employee e
+    -> join department d on e.dept_id = d.dept_id
+    -> where e.salary>(select min(salary) from employee e2 where e2.dept_id = e.dept_id) group by d.dept_id;
++---------+-----------+----------+
+| dept_id | dept_name | 2nd_min  |
++---------+-----------+----------+
+|       2 | IT        | 75000.00 |
+|       3 | Finance   | 95000.00 |
++---------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select d.dept_id,d.dept_name,max(e.salary) as 2nd_max
+    -> from employee e
+    -> join department d on e.dept_id = d.dept_id
+    -> where e.salary<(select max(salary) from employee e2 where e2.dept_id = e.dept_id) group by d.dept_id;
++---------+-----------+----------+
+| dept_id | dept_name | 2nd_max  |
++---------+-----------+----------+
+|       2 | IT        | 75000.00 |
+|       3 | Finance   | 90000.00 |
++---------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select d.dept_id,d.dept_name,min(e.salary) as 3rd_min
+    -> from employee e
+    -> join department d on e.dept_id = d.dept_id
+    -> where e.salary>(select min(salary) from employee e2 where e2.dept_id = e.dept_id and e2.salary>(select min(salary) from employee e3 where e3.dept_id = e2.dept_id)) group by d.dept_id;
++---------+-----------+----------+
+| dept_id | dept_name | 3rd_min  |
++---------+-----------+----------+
+|       2 | IT        | 80000.00 |
++---------+-----------+----------+
+1 row in set (0.00 sec)
+
+Stored Procedures:
+====================
+A stored procedure is a named, precompiled collection of one or more SQL statements that are stored inside the database and can be executed(called) whenever required. instead of sending long block of SQL from an application every time, the application simply calls the procedure by name.
+
+stored procedures behave likes function or subroutines in programming language . they can be accept parameters, perform logics (loops, conditions, variable declarations) and return results.
+
+why use stored procedures?
+============================
+performance : precompiled and catch by the database engine, so repeated execution is faster than sending raw SQL each time.
+reusability : write the logic once, call it from many applications or scripts.
+security : users can be granted execute permission on a procedure without granting direct access to the underlying tables.
+Reduced network traffic : A single call statement replaces many lines of sql sent over the network
+Maintainability : Business logic is centralised in the database, so changes are made in one place.
+Consistency : ensures the same validation/business rules are applied every time, regardless of which application calls it.
+
+Advantages
+============
+Faster execution after compilation.
+Reduce duplicate SQL
+Supports transaction, loops, conditions, variables, cursors, and exception handlers
+easy maintenance.
+
+Disadvantages
+==============
+Debugging can be difficult.
+Vendor-specific syntax
+complex procedures may become hard to maintain.
+ 
+create procedure
+================
+syntax
+========
+DELIMITER//
+
+CREATE PROCEDURE procedure-name(
+[IN|OUT|INOUT] parameter-name data-type,........)
+BEGIN
+------- SQL Statements/Logic
+------- Declarations, conditions, loops... etc 
+END//
+
+DELIMITER;
+
+CALL PROCEDURE-NAME;
+
+SHOW PROCEDURE STATUS
+WHERE Db = 'PFS04';
+
+mysql> SHOW TABLES;
++-----------------+
+| Tables_in_pfs04 |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
+| department      |
+| employee        |
+| project         |
++-----------------+
+6 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(50),
+    ->     department VARCHAR(30),
+    ->     salary DECIMAL(10,2),
+    ->     experience INT,
+    ->     city VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> INSERT INTO Employees VALUES
+    -> (101,'Rahul','IT',65000,5,'Hyderabad'),
+    -> (102,'Priya','HR',45000,3,'Chennai'),
+    -> (103,'Amit','Finance',70000,6,'Bangalore'),
+    -> (104,'Sneha','IT',80000,8,'Hyderabad'),
+    -> (105,'Kiran','Sales',40000,2,'Pune'),
+    -> (106,'Ravi','HR',50000,4,'Mumbai'),
+    -> (107,'Anjali','IT',90000,10,'Delhi'),
+    -> (108,'Suresh','Finance',55000,5,'Chennai'),
+    -> (109,'Divya','Sales',48000,3,'Hyderabad'),
+    -> (110,'Vikram','IT',75000,7,'Bangalore');
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEES;
++--------+----------+------------+----------+------------+-----------+
+| emp_id | emp_name | department | salary   | experience | city      |
++--------+----------+------------+----------+------------+-----------+
+|    101 | Rahul    | IT         | 65000.00 |          5 | Hyderabad |
+|    102 | Priya    | HR         | 45000.00 |          3 | Chennai   |
+|    103 | Amit     | Finance    | 70000.00 |          6 | Bangalore |
+|    104 | Sneha    | IT         | 80000.00 |          8 | Hyderabad |
+|    105 | Kiran    | Sales      | 40000.00 |          2 | Pune      |
+|    106 | Ravi     | HR         | 50000.00 |          4 | Mumbai    |
+|    107 | Anjali   | IT         | 90000.00 |         10 | Delhi     |
+|    108 | Suresh   | Finance    | 55000.00 |          5 | Chennai   |
+|    109 | Divya    | Sales      | 48000.00 |          3 | Hyderabad |
+|    110 | Vikram   | IT         | 75000.00 |          7 | Bangalore |
++--------+----------+------------+----------+------------+-----------+
+10 rows in set (0.00 sec)
+
+SHOW mysql> DELIMITER //
+mysql> CREATE PROCEDURE GETALLEMP()
+    -> BEGIN
+    ->     SELECT * FROM EMPLOYEES;
+    -> END //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DELIMITER ;
+mysql> CALL GETALLEMP();
++--------+----------+------------+----------+------------+-----------+
+| emp_id | emp_name | department | salary   | experience | city      |
++--------+----------+------------+----------+------------+-----------+
+|    101 | Rahul    | IT         | 65000.00 |          5 | Hyderabad |
+|    102 | Priya    | HR         | 45000.00 |          3 | Chennai   |
+|    103 | Amit     | Finance    | 70000.00 |          6 | Bangalore |
+|    104 | Sneha    | IT         | 80000.00 |          8 | Hyderabad |
+|    105 | Kiran    | Sales      | 40000.00 |          2 | Pune      |
+|    106 | Ravi     | HR         | 50000.00 |          4 | Mumbai    |
+|    107 | Anjali   | IT         | 90000.00 |         10 | Delhi     |
+|    108 | Suresh   | Finance    | 55000.00 |          5 | Chennai   |
+|    109 | Divya    | Sales      | 48000.00 |          3 | Hyderabad |
+|    110 | Vikram   | IT         | 75000.00 |          7 | Bangalore |
++--------+----------+------------+----------+------------+-----------+
+10 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> SHOW PROCEDURE STATUS
+    -> WHERE Db = 'PFS04';
++-------+-----------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db    | Name      | Type      | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++-------+-----------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| pfs04 | GETALLEMP | PROCEDURE | root@localhost | 2026-08-04 10:55:28 | 2026-08-04 10:55:28 | DEFINER       |         | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
++-------+-----------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+1 row in set (0.01 sec)
+
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE GETALLIT()
+    -> BEGIN
+    ->     SELECT * FROM EMPLOYEES WHERE DEPARTMENT = 'IT';
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> CALL GETALLIT();
++--------+----------+------------+----------+------------+-----------+
+| emp_id | emp_name | department | salary   | experience | city      |
++--------+----------+------------+----------+------------+-----------+
+|    101 | Rahul    | IT         | 65000.00 |          5 | Hyderabad |
+|    104 | Sneha    | IT         | 80000.00 |          8 | Hyderabad |
+|    107 | Anjali   | IT         | 90000.00 |         10 | Delhi     |
+|    110 | Vikram   | IT         | 75000.00 |          7 | Bangalore |
++--------+----------+------------+----------+------------+-----------+
+4 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SHOW PROCEDURE STATUS
+    -> WHERE Db = 'PFS04';
++-------+-----------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db    | Name      | Type      | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++-------+-----------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| pfs04 | GETALLEMP | PROCEDURE | root@localhost | 2026-08-04 10:55:28 | 2026-08-04 10:55:28 | DEFINER       |         | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| pfs04 | GETALLIT  | PROCEDURE | root@localhost | 2026-08-04 11:00:29 | 2026-08-04 11:00:29 | DEFINER       |         | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
++-------+-----------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+2 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE GETALLEMPNAME()
+    -> BEGIN
+    ->     SELECT EMP_NAME FROM EMPLOYEES;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> CALL GETALLEMPNAME();
++----------+
+| EMP_NAME |
++----------+
+| Rahul    |
+| Priya    |
+| Amit     |
+| Sneha    |
+| Kiran    |
+| Ravi     |
+| Anjali   |
+| Suresh   |
+| Divya    |
+| Vikram   |
++----------+
+10 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW PROCEDURE STATUS
+    -> WHERE Db = 'PFS04';
++-------+---------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db    | Name          | Type      | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++-------+---------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| pfs04 | GETALLEMP     | PROCEDURE | root@localhost | 2026-08-04 10:55:28 | 2026-08-04 10:55:28 | DEFINER       |         | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| pfs04 | GETALLEMPNAME | PROCEDURE | root@localhost | 2026-08-04 11:05:56 | 2026-08-04 11:05:56 | DEFINER       |         | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
+| pfs04 | GETALLIT      | PROCEDURE | root@localhost | 2026-08-04 11:00:29 | 2026-08-04 11:00:29 | DEFINER       |         | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
++-------+---------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> Terminal close -- exit!
